@@ -25,13 +25,14 @@ function setupHTML(){
   
   let topGroup = new HorzGroup(vgroup);
   let panel1 = new Panel(topGroup, ['out' ,'round', 'fill']);
-  let panel2 = new Panel(topGroup, ['out' ,'round', 'fill']);
-  let panel3 = new Panel(topGroup, ['out' ,'round', 'fill']);
+  let panel2 = new Panel(topGroup, ['out' ,'round', 'fill'], 0, 100);
+  //let panel3 = new Panel(topGroup, ['out' ,'round', 'fill'], 0, 75);
+  slider = new Slider(topGroup);
   let panel4 = new Panel(topGroup, ['out' ,'round', 'fill']);
   
   let midGroup = new HorzGroup(vgroup);
   let subtitlePanell = new Panel(midGroup, ['out', 'round', 'fill']);
-  let subtitlePanel = new Panel(midGroup, ['out', 'round']);
+  let subtitlePanel = new Panel(midGroup, ['out']);
   let subtitlePanelr = new Panel(midGroup, ['out', 'round', 'fill']);
   let subtitleGroup = new HorzGroup(subtitlePanel);
   let subtitleText = new Text(subtitleGroup, "XD");
@@ -75,4 +76,11 @@ function clearcanvas(){
 function printHTML(){
   print(main);
   consoleText.changeText('Check console!');
+}
+
+
+function changeBar(){
+  print(mouseY, slider.HTML.position().y);
+  //let newPos = -slider.HTML.position().y;
+  //slider.sliderBar.style('margin-bottom: ' + newPos + 'px');
 }

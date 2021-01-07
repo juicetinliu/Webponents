@@ -42,15 +42,23 @@ class Main extends Webponent{
 }
 
 class Panel extends Webponent{
-  constructor(parent, attributes = ['out', 'round']){
+  constructor(parent, attributes = ['out', 'round'], w = 0, h = 0){
     super('p', parent);
     this.atbs = attributes;
+    this.w = w;
+    this.h = h;
   }
   
   genHTML(){
     this.HTML = createDiv();
     this.HTML.class(this.attributesToClass(this.atbs));
     this.HTML.parent(this.parent.HTML);
+    if(this.w > 0){
+      this.HTML.style('width: ' + this.w + 'px');
+    }
+    if(this.h > 0){
+      this.HTML.style('height: ' + this.h + 'px');
+    }
   }
 }
 
@@ -155,10 +163,10 @@ class VertGroup extends Webponent{
 }
 
 class Canvas extends Webponent{
-  constructor(parent, w = 500, h = 500){
+  constructor(parent, dims = [500, 500]){
     super('canvas', parent);
-    this.w = w;
-    this.h = h;
+    this.w = dims[0];
+    this.h = dims[1];
   }
   
   genHTML(){
@@ -178,14 +186,27 @@ class Button extends Webponent{
       this.clr = '#e9e9e9';
       this.hclr = '#aaaaaa';
     }
+    if(func === null){
+      this.purpose = 'x'; //no purpose
+    }else if(typeof func === 'string'){
+      this.purpose = 'l'; //link
+    }else{
+      this.purpose = 'f'; //function
+    }
     this.func = func;
     this.htxt = hovertxt;
   }
   
   genHTML(){
-    this.HTML = createSpan();
+    if(this.purpose === 'l'){
+      this.HTML = createA(this.func, '', "_blank" );
+    }else{
+      this.HTML = createSpan();
+    }
     this.HTML.class('butt');
-    this.HTML.mousePressed(this.func);
+    if(this.purpose === 'f'){
+      this.HTML.mousePressed(this.func);
+    }
     this.HTML.parent(this.parent.HTML);
     this.HTML.attribute('title', this.htxt);
     this.HTML.style('background-color: ' + this.clr);
@@ -203,9 +224,9 @@ class Button extends Webponent{
 }
 
 class Text extends Webponent{
-  constructor(parent, t, attributes = []){
+  constructor(parent, txt, attributes = []){
     super('txt', parent);
-    this.text = t;
+    this.text = txt;
     this.atbs = attributes;
   }
   
@@ -219,3 +240,22 @@ class Text extends Webponent{
     this.HTML.html(newText);
   }
 }
+
+class Slider extends Webponent{
+  constructor(parent){
+    super('slider', parent);
+    this.sliderBar = null;
+  }
+  
+  genHTML(){
+    this.HTML = createDiv();
+    this.HTML.class('slider-in slider-round');
+    this.HTML.parent(this.parent.HTML);
+    this.HTML.mousePressed(changeBar);
+    this.sliderBar = createDiv();
+    this.sliderBar.class('slider-knob');
+    this.sliderBar.parent(this.HTML);
+  }
+}
+
+let slider;
