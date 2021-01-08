@@ -79,8 +79,8 @@ function printHTML(){
 }
 
 
-//function changeBar(){
-//  print(mouseY, slider.HTML.position().y);
-//  //let newPos = -slider.HTML.position().y;
-//  //slider.sliderBar.style('margin-bottom: ' + newPos + 'px');
-//}
+function changeBar(){
+  print(mouseY, slider.HTML.position().y);
+  //let newPos = -slider.HTML.position().y;
+  //slider.sliderBar.style('margin-bottom: ' + newPos + 'px');
+}
