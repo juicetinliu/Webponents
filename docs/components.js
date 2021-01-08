@@ -248,14 +248,12 @@ class Slider extends Webponent{
   }
   
   genHTML(){
-    this.HTML = createDiv();
-    this.HTML.class('slider-in slider-round');
+    this.HTML = createSlider();
+    this.HTML.class('slider-in slider-in-v slider-round');
     this.HTML.parent(this.parent.HTML);
-    this.HTML.mousePressed(changeBar);
-    this.sliderBar = createDiv();
-    this.sliderBar.class('slider-knob');
-    this.sliderBar.parent(this.HTML);
+  }
+  
+  changeBar(hello){
+    print(hello);
   }
 }
-
-let slider;
