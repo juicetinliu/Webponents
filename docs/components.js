@@ -201,7 +201,7 @@ class Button extends Webponent{
     if(this.purpose === 'l'){
       this.HTML = createA(this.func, '', "_blank" );
     }else{
-      this.HTML = createSpan();
+      this.HTML = createButton('');
     }
     this.HTML.class('butt');
     if(this.purpose === 'f'){
@@ -212,7 +212,6 @@ class Button extends Webponent{
     this.HTML.style('background-color: ' + this.clr);
     this.HTML.attribute('onmouseover', 'this.style.backgroundColor = \'' + this.hclr + '\'');
     this.HTML.attribute('onmouseout', 'this.style.backgroundColor = \'' + this.clr + '\'');
-    
     if(this.iconpath === null || this.iconpath === ''){
       this.HTML.style('padding: 20px');
     }else{
@@ -224,7 +223,7 @@ class Button extends Webponent{
 }
 
 class Text extends Webponent{
-  constructor(parent, txt, attributes = []){
+  constructor(parent, txt = "", attributes = []){
     super('txt', parent);
     this.text = txt;
     this.atbs = attributes;
@@ -242,20 +241,26 @@ class Text extends Webponent{
 }
 
 class Slider extends Webponent{
-  constructor(parent){
+  constructor(parent, attributes = [], sVals = [0, 100, 50, 1]){
     super('slider', parent);
-    this.sliderBar = null;
+    this.slide = null;
+    this.min = sVals[0];
+    this.max = sVals[1];
+    this.start = sVals[2];
+    this.step = sVals[3];
+    this.atbs = attributes;
   }
   
   genHTML(){
     this.HTML = createDiv();
-    this.HTML.class('slider-in slider-round');
+    this.HTML.class(this.attributesToClass(this.atbs));
     this.HTML.parent(this.parent.HTML);
-    this.HTML.mousePressed(changeBar);
-    this.sliderBar = createDiv();
-    this.sliderBar.class('slider-knob');
-    this.sliderBar.parent(this.HTML);
+    this.slide = createSlider(this.min, this.max, this.start, this.step);
+    this.slide.class('slider-in');
+    this.slide.parent(this.HTML);
+  }
+  
+  val(){
+    return this.slide.value();
   }
 }
-
-let slider;
